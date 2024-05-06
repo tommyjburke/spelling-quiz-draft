@@ -1,10 +1,17 @@
 import { useState } from 'react'
+import { getHumanSpeech } from './humanSpeech.js'
+import { playHumanSpeech } from './humanSpeech.js'
 
 export default function Form({ onAddItems }) {
    const [description, setDescription] = useState('')
    const [quantity, setQuantity] = useState(1)
    // const [scrambled, setScrambled] = useState('')
    const [warning, setWarning] = useState('')
+   const [result, setResult] = useState({
+      icon: null,
+      blob: null,
+   })
+   const [audioUrl, setAudioUrl] = useState(null)
 
    const scrambleWord = (word) => {
       // Convert the word to an array of characters
@@ -13,7 +20,10 @@ export default function Form({ onAddItems }) {
       // Shuffle the array using the Fisher-Yates shuffle algorithm
       for (let i = charArray.length - 1; i > 0; i--) {
          const j = Math.floor(Math.random() * (i + 1))
-         ;[charArray[i], charArray[j]] = [charArray[j], charArray[i]]
+         ;[charArray[i], charArray[j]] = [
+            charArray[j],
+            charArray[i],
+         ]
       }
 
       // Convert the shuffled array back to a string
@@ -22,14 +32,38 @@ export default function Form({ onAddItems }) {
       return scrambledWord
    }
 
-   function handleSubmit(e) {
+   const handleSubmit = async (e) => {
       e.preventDefault()
 
       if (!description) return
 
+      // const word = 'hello'
+      // const { icon, blob } = await getHumanSpeech(word)
+
+      // setResult({ icon, blob })
+
+      // if (blob) {
+      //    const url = URL.createObjectURL(blob)
+      //    setAudioUrl(url)
+      // } else {
+      //    setAudioUrl(null)
+      // }
+
+      // const audioBlob = blob ? URL.createObjectURL(blob) : null
+
+      // const icon = playHumanSpeech(description)
+      const { success, icon } = await playHumanSpeech(
+         description
+      )
+
+      // console.log('human: ', human)
+      console.log('icon: ', icon)
+
       const scrambled = scrambleWord(description)
 
       const newItem = {
+         success,
+         icon,
          id: Date.now(),
          description,
          scrambled,
@@ -54,7 +88,10 @@ export default function Form({ onAddItems }) {
       const pattern = /^[A-Za-z]*$/
 
       // Check if the input matches the pattern and does not contain spaces
-      if (pattern.test(inputValue) && !inputValue.includes(' ')) {
+      if (
+         pattern.test(inputValue) &&
+         !inputValue.includes(' ')
+      ) {
          setDescription(inputValue)
       } else {
          // alert('Please enter only alphabetical characters')
@@ -92,7 +129,9 @@ export default function Form({ onAddItems }) {
          <button>Add</button>
          <br />
          <br />
-         <p style={{ color: 'darkred', fontSize: '14px' }}>{warning}</p>
+         <p style={{ color: 'darkred', fontSize: '14px' }}>
+            {warning}
+         </p>
       </form>
    )
 }
