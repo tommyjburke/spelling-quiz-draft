@@ -1,3 +1,3 @@
 export default function Logo() {
-   return <h1>SPELLING 2</h1>
+   return <h1>Spelling</h1>
 }

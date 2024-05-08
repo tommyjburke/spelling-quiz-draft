@@ -17,28 +17,6 @@ export default function App() {
       console.log('BuildBoard')
    }
 
-   //  const reScrambleWord = (item) => {
-   //     // Convert the word to an array of characters
-   //     console.log('ITEM: ', item)
-
-   //     let word = item.description
-   //     const charArray = word.split('')
-
-   //     // Shuffle the array using the Fisher-Yates shuffle algorithm
-   //     for (let i = charArray.length - 1; i > 0; i--) {
-   //        const j = Math.floor(Math.random() * (i + 1))
-   //        ;[charArray[i], charArray[j]] = [charArray[j], charArray[i]]
-   //     }
-
-   //     // Convert the shuffled array back to a string
-   //     const scrambledWord = charArray.join('')
-   //     console.log('Re-scrambled', scrambledWord)
-   //     item.scrambled = scrambledWord
-   //     console.log('new item: ', item)
-   //     setItems((items) => [...items, item])
-   //     // return scrambledWord
-   //  }
-
    const reScrambleWord = (item) => {
       // Convert the word to an array of characters
       console.log('ITEM: ', item)
@@ -48,7 +26,10 @@ export default function App() {
       // Shuffle the array using the Fisher-Yates shuffle algorithm
       for (let i = charArray.length - 1; i > 0; i--) {
          const j = Math.floor(Math.random() * (i + 1))
-         ;[charArray[i], charArray[j]] = [charArray[j], charArray[i]]
+         ;[charArray[i], charArray[j]] = [
+            charArray[j],
+            charArray[i],
+         ]
       }
 
       // Convert the shuffled array back to a string
@@ -77,12 +58,18 @@ export default function App() {
 
    function handleToggleItem(id) {
       setItems((items) =>
-         items.map((item) => (item.id === id ? { ...item, packed: !item.packed } : item))
+         items.map((item) =>
+            item.id === id
+               ? { ...item, packed: !item.packed }
+               : item
+         )
       )
    }
 
    function handleClearList() {
-      const confirmed = window.confirm('Are you sure you want to delete all items?')
+      const confirmed = window.confirm(
+         'Are you sure you want to delete all items?'
+      )
 
       if (confirmed) setItems([])
    }

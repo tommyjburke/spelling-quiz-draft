@@ -1,4 +1,4 @@
-export const playHumanSpeech = async (word) => {
+export const verifyHumanSpeech = async (word) => {
    const url = `https://api.dictionaryapi.dev/api/v2/entries/en/${word}`
 
    try {
@@ -14,14 +14,14 @@ export const playHumanSpeech = async (word) => {
          const audio = new Audio(pronunciation)
          console.log('audio: ', audio)
          audio.play()
-         return { success: true, icon }
+         return { hasHumanVoice: true, icon }
       } else {
          const icon = '❌'
-         return { success: false, icon }
+         return { hasHumanVoice: false, icon }
       }
    } catch (error) {
       const icon = '❌'
-      return { success: false, icon }
+      return { hasHumanVoice: false, icon }
    }
 }
 
@@ -59,5 +59,32 @@ export const getHumanSpeech = async (word) => {
       return { icon: '✓', blob: audioBlob }
    } else {
       return { icon: '✗', blob: null }
+   }
+}
+
+export const playHumanSpeech = async (word) => {
+   const url = `https://api.dictionaryapi.dev/api/v2/entries/en/${word}`
+
+   try {
+      const result = await fetch(url).then((res) => res.json())
+      const pronunciation =
+         result[0]?.phonetics[0]?.audio ||
+         result[0]?.phonetics[1]?.audio ||
+         result[0]?.phonetics[2]?.audio ||
+         result[0]?.phonetics[3]?.audio
+
+      if (pronunciation) {
+         const icon = '👩‍🦲'
+         const audio = new Audio(pronunciation)
+         console.log('audio: ', audio)
+         audio.play()
+         return { hasHumanVoice: true, icon }
+      } else {
+         const icon = '❌'
+         return { hasHumanVoice: false, icon }
+      }
+   } catch (error) {
+      const icon = '❌'
+      return { hasHumanVoice: false, icon }
    }
 }

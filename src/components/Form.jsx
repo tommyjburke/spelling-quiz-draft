@@ -1,17 +1,22 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { getHumanSpeech } from './humanSpeech.js'
-import { playHumanSpeech } from './humanSpeech.js'
+import { verifyHumanSpeech } from './humanSpeech.js'
+import DragDrop from './DragDrop.jsx'
+import UploadLogo from './UploadLogo.jsx'
+import txtIcon from './text-icon.png'
 
 export default function Form({ onAddItems }) {
    const [description, setDescription] = useState('')
    const [quantity, setQuantity] = useState(1)
    // const [scrambled, setScrambled] = useState('')
-   const [warning, setWarning] = useState('')
+   const [showWarning, setShowWarning] = useState('')
    const [result, setResult] = useState({
       icon: null,
       blob: null,
    })
    const [audioUrl, setAudioUrl] = useState(null)
+
+   const warning = 'Alphabetical characters only!'
 
    const scrambleWord = (word) => {
       // Convert the word to an array of characters
@@ -34,29 +39,12 @@ export default function Form({ onAddItems }) {
 
    const handleSubmit = async (e) => {
       e.preventDefault()
-
       if (!description) return
 
-      // const word = 'hello'
-      // const { icon, blob } = await getHumanSpeech(word)
-
-      // setResult({ icon, blob })
-
-      // if (blob) {
-      //    const url = URL.createObjectURL(blob)
-      //    setAudioUrl(url)
-      // } else {
-      //    setAudioUrl(null)
-      // }
-
-      // const audioBlob = blob ? URL.createObjectURL(blob) : null
-
-      // const icon = playHumanSpeech(description)
-      const { success, icon } = await playHumanSpeech(
+      const { success, icon } = await verifyHumanSpeech(
          description
       )
 
-      // console.log('human: ', human)
       console.log('icon: ', icon)
 
       const scrambled = scrambleWord(description)
@@ -95,18 +83,26 @@ export default function Form({ onAddItems }) {
          setDescription(inputValue)
       } else {
          // alert('Please enter only alphabetical characters')
-         setWarning('Please enter only alphabetical characters')
+         setShowWarning(true)
       }
    }
-   // setDescription(e.target.value)
+
+   useEffect(() => {
+      let timeoutId
+      if (showWarning) {
+         timeoutId = setTimeout(() => {
+            setShowWarning(false)
+         }, 5000) // 5 seconds
+      }
+      return () => clearTimeout(timeoutId)
+   }, [showWarning])
 
    return (
-      <form
-         className='add-form'
-         onSubmit={handleSubmit}
-      >
-         <h3>Add word:</h3>
-         {/* <select
+      <div>
+         <div>
+            <form className='add-form' onSubmit={handleSubmit}>
+               <h3>Add word:</h3>
+               {/* <select
             value={quantity}
             onChange={(e) => setQuantity(Number(e.target.value))}
          >
@@ -119,19 +115,30 @@ export default function Form({ onAddItems }) {
                </option>
             ))}
          </select> */}
-         <input
-            type='text'
-            placeholder='new word...'
-            value={description}
-            // onChange={(e) => setDescription(e.target.value)}
-            onChange={handleChange}
-         />
-         <button>Add</button>
-         <br />
-         <br />
-         <p style={{ color: 'darkred', fontSize: '14px' }}>
-            {warning}
-         </p>
-      </form>
+               <input
+                  type='text'
+                  placeholder='new word...'
+                  value={description}
+                  // onChange={(e) => setDescription(e.target.value)}
+                  onChange={handleChange}
+               />
+               <button>Add</button>
+               <DragDrop onAddItems={onAddItems}>
+                  {/* <span className='dropBox'> */}
+                  {/* Upload/Drag Txt{' '} */}
+                  {/* <img
+                        src={txtIcon}
+                        alt='txt file'
+                        height='50px'
+                     /> */}
+                  {/* </span> */}
+                  <UploadLogo />
+               </DragDrop>
+            </form>
+         </div>
+         <div>
+            {showWarning && <p className='warning'>{warning}</p>}
+         </div>
+      </div>
    )
 }

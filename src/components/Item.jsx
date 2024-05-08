@@ -18,29 +18,26 @@ export default function Item({
    return (
       // <div key={index}>
 
-      <div key={index}>
-         <span>{index + 1}.</span>
-         <span>
-            {' '}
-            <span
+      <tr key={index}>
+         <td>{index + 1}.</td>
+
+         <td
+            className='largeIcon'
+            onClick={() => readWord(item.description)}
+         >
+            <span className='largeIcon'>🤖</span>
+         </td>
+         {item.success ? (
+            <td
                className='largeIcon'
-               onClick={() => readWord(item.description)}
+               onClick={() => playHumanSpeech(item.description)}
             >
-               <span className='largeIcon'>🤖</span>
-            </span>
-            {item.success ? (
-               <span
-                  className='largeIcon'
-                  onClick={() =>
-                     playHumanSpeech(item.description)
-                  }
-               >
-                  <span className='largeIcon'>{item.icon}</span>
-               </span>
-            ) : (
-               <span className=''>␀</span>
-            )}
-         </span>
+               <span className='largeIcon'>{item.icon}</span>
+            </td>
+         ) : (
+            <td className=''>␀</td>
+         )}
+
          {/* <td>
                <span
                   className='largeIcon'
@@ -51,8 +48,8 @@ export default function Item({
                   <span className='largeIcon'>👩‍🦲</span>
                </span>
             </td> */}
-         <span>{item.description.length}</span>
-         <span
+         <td>{item.description.length}</td>
+         <td
             style={
                item.packed
                   ? { textDecoration: 'line-tdrough' }
@@ -61,9 +58,9 @@ export default function Item({
          >
             {/* {item.quantity} */}
             {item.description} {'  '}
-         </span>
-         <span>{item.scrambled}</span>
-         <span>
+         </td>
+         <td>{item.scrambled}</td>
+         <td>
             {' '}
             <span
                className='largeIcon'
@@ -71,9 +68,9 @@ export default function Item({
             >
                ♻️
             </span>
-         </span>
+         </td>
 
-         <span>
+         <td>
             {' '}
             <button
                className='largeIcon'
@@ -81,8 +78,8 @@ export default function Item({
             >
                <span className='largeIcon'>❌</span>
             </button>
-         </span>
-      </div>
+         </td>
+      </tr>
       // </div>
    )
 }

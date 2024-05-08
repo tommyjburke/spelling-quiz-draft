@@ -43,18 +43,33 @@ export default function PackingList({
    if (showMenu) {
       return (
          <div className='list'>
-            <ul>
-               {sortedItems.map((item, index) => (
-                  <Item
-                     index={index}
-                     item={item}
-                     onDeleteItem={onDeleteItem}
-                     onToggleItem={onToggleItem}
-                     key={item.id}
-                     reScrambleWord={reScrambleWord}
-                  />
-               ))}
-            </ul>
+            <table>
+               <thead>
+                  <tr>
+                     <th>i*</th>
+                     <th>👂</th>
+                     <th>👂</th>
+                     <th>Letters</th>
+                     <th>word</th>
+                     <th>scrambled</th>
+                     <th>ReScramble</th>
+                     <th>Delete</th>
+                  </tr>
+               </thead>
+
+               <tbody>
+                  {sortedItems.map((item, index) => (
+                     <Item
+                        index={index}
+                        item={item}
+                        onDeleteItem={onDeleteItem}
+                        onToggleItem={onToggleItem}
+                        key={item.id}
+                        reScrambleWord={reScrambleWord}
+                     />
+                  ))}
+               </tbody>
+            </table>
 
             <button onClick={() => assembleBoard()}>
                ASSEMBLE BOARD

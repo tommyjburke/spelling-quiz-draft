@@ -1,6 +1,7 @@
 import { isDisabled } from '@testing-library/user-event/dist/utils'
 import React, { useState } from 'react'
 import { playHumanSpeech } from './humanSpeech.js'
+import ProgressBar from './ProgressBar.jsx'
 
 function GameBoard({ items, setShowMenu }) {
    const [userAttempts, setUserAttempts] = useState([])
@@ -104,6 +105,7 @@ function GameBoard({ items, setShowMenu }) {
             onClick={() => setShowMenu(false)}
          ></button>
          <div className='table-container'>
+            <ProgressBar percentage={percentage} />
             <h2>
                {' '}
                Questions: {items.length} Score: {score} (
@@ -115,12 +117,14 @@ function GameBoard({ items, setShowMenu }) {
                {/* Apply containerStyle to center the table */}
                <table>
                   <tr>
-                     <th>*</th>
-                     <th>🤖</th>
-                     <th>👩‍🦲</th>
-                     <th>Scrambled</th>
+                     <th title='question number'>*</th>
+                     <th title='robot voice'>🤖</th>
+                     <th title='human voice'>👩‍🦲</th>
+                     <th title='Scrambled version'>Scrambled</th>
                      <th>Your Guess</th>
-                     <th>Letters</th>
+                     <th title='Number of letters in each word'>
+                        Letters
+                     </th>
                      <th></th>
                   </tr>
                   {items.map((item, index) => (
@@ -130,6 +134,7 @@ function GameBoard({ items, setShowMenu }) {
                            {' '}
                            <span
                               className='largeIcon'
+                              title='LISTEN'
                               onClick={() =>
                                  readWord(item.description)
                               }
@@ -152,6 +157,7 @@ function GameBoard({ items, setShowMenu }) {
                         <td>{item.scrambled} </td>
                         <td>
                            <input
+                              title='your guess'
                               className='centred'
                               type='text'
                               value={item.usersGuess}
@@ -168,7 +174,7 @@ function GameBoard({ items, setShowMenu }) {
                               }
                            />
                         </td>
-                        <td>
+                        <td title='No.letters in this word'>
                            {item.description.length -
                               item.usersGuess?.length}
                            {}
