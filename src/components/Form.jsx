@@ -3,9 +3,15 @@ import { getHumanSpeech } from './humanSpeech.js'
 import { verifyHumanSpeech } from './humanSpeech.js'
 import DragDrop from './DragDrop.jsx'
 import UploadLogo from './UploadLogo.jsx'
-import txtIcon from './text-icon.png'
+import txtIcon from '../media/text-icon.png'
+import { Button } from 'antd'
+// import { HappyProvider } from '@ant-design/happy-work-theme'
 
-export default function Form({ onAddItems }) {
+export default function Form({
+   onAddItems,
+   speechSpeed,
+   setSpeechSpeed,
+}) {
    const [description, setDescription] = useState('')
    const [quantity, setQuantity] = useState(1)
    // const [scrambled, setScrambled] = useState('')
@@ -17,6 +23,9 @@ export default function Form({ onAddItems }) {
    const [audioUrl, setAudioUrl] = useState(null)
 
    const warning = 'Alphabetical characters only!'
+   function handleSliderChange(event) {
+      setSpeechSpeed(parseFloat(event.target.value))
+   }
 
    const scrambleWord = (word) => {
       // Convert the word to an array of characters
@@ -30,7 +39,6 @@ export default function Form({ onAddItems }) {
             charArray[i],
          ]
       }
-
       // Convert the shuffled array back to a string
       const scrambledWord = charArray.join('')
 
@@ -41,16 +49,18 @@ export default function Form({ onAddItems }) {
       e.preventDefault()
       if (!description) return
 
-      const { success, icon } = await verifyHumanSpeech(
-         description
-      )
+      const { hasHumanVoice, icon, synonyms } =
+         await verifyHumanSpeech(description)
 
       console.log('icon: ', icon)
+      console.log('hasHumanVoice: ', hasHumanVoice)
+      console.log('OBJECT SYNONYMS: ', synonyms)
 
       const scrambled = scrambleWord(description)
 
       const newItem = {
-         success,
+         synonyms,
+         hasHumanVoice,
          icon,
          id: Date.now(),
          description,
@@ -62,6 +72,7 @@ export default function Form({ onAddItems }) {
          showButton: true,
       }
       console.log('scrambled', scrambled)
+      console.log('NEW ITEM: ', newItem)
 
       onAddItems(newItem)
 
@@ -101,7 +112,7 @@ export default function Form({ onAddItems }) {
       <div>
          <div>
             <form className='add-form' onSubmit={handleSubmit}>
-               <h3>Add word:</h3>
+               {/* <h3>Add word:</h3> */}
                {/* <select
             value={quantity}
             onChange={(e) => setQuantity(Number(e.target.value))}
@@ -117,12 +128,12 @@ export default function Form({ onAddItems }) {
          </select> */}
                <input
                   type='text'
-                  placeholder='new word...'
+                  placeholder='add word here...'
                   value={description}
                   // onChange={(e) => setDescription(e.target.value)}
                   onChange={handleChange}
-               />
-               <button>Add</button>
+               />{' '}
+               <button style={{ marginLeft: -60 }}>Add</button>
                <DragDrop onAddItems={onAddItems}>
                   {/* <span className='dropBox'> */}
                   {/* Upload/Drag Txt{' '} */}
@@ -134,6 +145,20 @@ export default function Form({ onAddItems }) {
                   {/* </span> */}
                   <UploadLogo />
                </DragDrop>
+               {/* <div className='rate-control'>
+                  <label>🗣️</label>
+                  <input
+                     type='range'
+                     min='0.1'
+                     max='1.4'
+                     step='0.1'
+                     value={speechSpeed}
+                     onChange={handleSliderChange}
+                     className='slider rate-control'
+                     // className='slider'
+                  />
+                  <span> {speechSpeed.toFixed(1)}</span>
+               </div> */}
             </form>
          </div>
          <div>

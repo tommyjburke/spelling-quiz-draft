@@ -115,7 +115,7 @@ function GameBoard({ items, setShowMenu }) {
             <div className='table-container'>
                {' '}
                {/* Apply containerStyle to center the table */}
-               <table>
+               <table style={{ width: '640px' }}>
                   <tr>
                      <th title='question number'>*</th>
                      <th title='robot voice'>🤖</th>
@@ -151,7 +151,7 @@ function GameBoard({ items, setShowMenu }) {
                                  )
                               }
                            >
-                              {item.success ? '▶️' : ' '}
+                              {item.hasHumanVoice ? '⏯️' : ' '}
                            </span>
                         </td>
                         <td>{item.scrambled} </td>

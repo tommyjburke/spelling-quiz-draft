@@ -4,6 +4,7 @@ function ProgressBar({ percentage }) {
    return (
       <div>
          <Progress
+            showInfo={false}
             percent={percentage}
             type='line'
             trailColor={'#6f6f6f'}

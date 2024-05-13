@@ -1,5 +1,6 @@
 import { getHumanSpeech } from './humanSpeech.js'
 import { playHumanSpeech } from './humanSpeech.js'
+import { Popover } from 'antd'
 
 export default function Item({
    item,
@@ -8,10 +9,12 @@ export default function Item({
    onToggleItem,
    reScrambleWord,
    index,
+   speechSpeed,
 }) {
    const readWord = (text) => {
       const synth = window.speechSynthesis
       const utterThis = new SpeechSynthesisUtterance(text)
+      utterThis.rate = speechSpeed
       synth.speak(utterThis)
    }
 
@@ -25,14 +28,14 @@ export default function Item({
             className='largeIcon'
             onClick={() => readWord(item.description)}
          >
-            <span className='largeIcon'>🤖</span>
+            <span className='largeIcon'>⏯️</span>
          </td>
-         {item.success ? (
+         {item.hasHumanVoice ? (
             <td
                className='largeIcon'
                onClick={() => playHumanSpeech(item.description)}
             >
-               <span className='largeIcon'>{item.icon}</span>
+               <span className='largeIcon'>⏯️</span>
             </td>
          ) : (
             <td className=''>␀</td>
@@ -48,18 +51,26 @@ export default function Item({
                   <span className='largeIcon'>👩‍🦲</span>
                </span>
             </td> */}
-         <td>{item.description.length}</td>
+         <Popover
+            content={`This word has ${item.description.length} letters`}
+         >
+            <td>{item.description.length}</td>
+         </Popover>
          <td
             style={
                item.packed
-                  ? { textDecoration: 'line-tdrough' }
+                  ? { textDecoration: 'line-through' }
                   : {}
             }
          >
             {/* {item.quantity} */}
             {item.description} {'  '}
          </td>
-         <td>{item.scrambled}</td>
+
+         <Popover content={item.synonyms} title='Synonyms'>
+            <td>{item.scrambled}</td>
+         </Popover>
+
          <td>
             {' '}
             <span

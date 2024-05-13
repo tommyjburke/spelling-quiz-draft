@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import Item from './Item'
 import GameBoard from './GameBoard'
+import Slider1 from './Slider1'
 
 export default function PackingList({
    items,
@@ -8,6 +9,8 @@ export default function PackingList({
    onDeleteItem,
    onToggleItem,
    onClearList,
+   speechSpeed,
+   setSpeechSpeed,
 }) {
    const [sortBy, setSortBy] = useState('input')
    const [showMenu, setShowMenu] = useState(true)
@@ -19,6 +22,10 @@ export default function PackingList({
    //    const utterThis = new SpeechSynthesisUtterance(text)
    //    synth.speak(utterThis)
    // }
+
+   function handleSliderChange(event) {
+      setSpeechSpeed(parseFloat(event.target.value))
+   }
 
    function assembleBoard() {
       console.log('ASSEMBLE BOARD')
@@ -42,57 +49,83 @@ export default function PackingList({
 
    if (showMenu) {
       return (
-         <div className='list'>
-            <table>
-               <thead>
-                  <tr>
-                     <th>i*</th>
-                     <th>👂</th>
-                     <th>👂</th>
-                     <th>Letters</th>
-                     <th>word</th>
-                     <th>scrambled</th>
-                     <th>ReScramble</th>
-                     <th>Delete</th>
-                  </tr>
-               </thead>
-
-               <tbody>
-                  {sortedItems.map((item, index) => (
-                     <Item
-                        index={index}
-                        item={item}
-                        onDeleteItem={onDeleteItem}
-                        onToggleItem={onToggleItem}
-                        key={item.id}
-                        reScrambleWord={reScrambleWord}
+         <>
+            {items.length < 1 && (
+               <div className='list'>
+                  Add word(s) above to begin
+               </div>
+            )}
+            {items.length > 0 && (
+               <>
+                  <div className='list'>
+                     <Slider1
+                        value={speechSpeed}
+                        onChange={setSpeechSpeed}
                      />
-                  ))}
-               </tbody>
-            </table>
 
-            <button onClick={() => assembleBoard()}>
-               ASSEMBLE BOARD
-            </button>
+                     <table style={{ width: '640px' }}>
+                        <thead>
+                           <tr>
+                              <th title='question number'> </th>
+                              <th title='robot speech'>🤖</th>
+                              <th title='human speech'>👩‍🦲</th>
+                              <th title='Number of letter in word'>
+                                 #Letters
+                              </th>
+                              <th>word</th>
+                              <th title='scrambled spelling'>
+                                 scrambled
+                              </th>
+                              <th title='Click to rescramble spelling'>
+                                 ReScramble
+                              </th>
+                              <th>Delete</th>
+                           </tr>
+                        </thead>
 
-            <div className='actions'>
-               <select
-                  value={sortBy}
-                  onChange={(e) => setSortBy(e.target.value)}
-               >
-                  <option value='input'>
-                     Sort by input order
-                  </option>
-                  <option value='description'>
-                     Sort by description
-                  </option>
-                  <option value='packed'>
-                     Sort by packed status
-                  </option>
-               </select>
-               <button onClick={onClearList}>Clear list</button>
-            </div>
-         </div>
+                        <tbody>
+                           {sortedItems.map((item, index) => (
+                              <Item
+                                 index={index}
+                                 item={item}
+                                 onDeleteItem={onDeleteItem}
+                                 onToggleItem={onToggleItem}
+                                 key={item.id}
+                                 reScrambleWord={reScrambleWord}
+                                 speechSpeed={speechSpeed}
+                              />
+                           ))}
+                        </tbody>
+                     </table>
+
+                     <button onClick={() => assembleBoard()}>
+                        ASSEMBLE BOARD
+                     </button>
+                     <div className='actions'>
+                        <select
+                           value={sortBy}
+                           onChange={(e) =>
+                              setSortBy(e.target.value)
+                           }
+                        >
+                           <option value='input'>
+                              Sort by input order
+                           </option>
+                           <option value='description'>
+                              Sort by description
+                           </option>
+                           <option value='packed'>
+                              Sort by packed status
+                           </option>
+                        </select>
+                        <button onClick={onClearList}>
+                           Clear list
+                        </button>
+                     </div>
+                  </div>
+               </>
+            )}
+         </>
       )
    } else {
       return (
