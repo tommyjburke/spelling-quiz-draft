@@ -8,6 +8,8 @@ import {
 import Maths from './Maths'
 import Error404 from './Error404'
 import KSTemplate from './KSTemplate'
+import KSTemplate2 from './KSTemplate2'
+import SpellingPractice from './SpellingPractice'
 
 const router = createBrowserRouter([
    {
@@ -22,6 +24,14 @@ const router = createBrowserRouter([
    {
       path: '/ks/:ksId',
       element: <KSTemplate />,
+   },
+   {
+      path: '/ks/:ksId/:level/:number',
+      element: <KSTemplate2 />,
+   },
+   {
+      path: '/spelling-list',
+      element: <SpellingPractice />,
    },
 ])
 

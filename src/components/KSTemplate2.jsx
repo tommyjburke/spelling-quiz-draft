@@ -3,7 +3,7 @@ import ksWords from '../data/ksWords.json'
 import { Link } from 'react-router-dom'
 import Error404 from './Error404'
 
-export default function KSTemplate() {
+export default function KSTemplate2() {
    const params = useParams()
    console.log('PARAMS: ', params)
    const id = useParams().ksId
@@ -37,12 +37,21 @@ export default function KSTemplate() {
    let shuffled = array ? shuffle(array) : 'INVALID'
 
    return (
-      <div>
+      <div className='main-page'>
          <h1>
             KSTemplate<p>{id}</p>
          </h1>
          {/* {JSON.stringify(ksWords)} */}
-         <h1>{myStringedArray}</h1>
+         <div
+            style={{
+               textAlign: 'center',
+               // alignItems: 'center',
+            }}
+         >
+            <p> {myStringedArray}</p>
+
+            <p> {JSON.stringify(params)}</p>
+         </div>
          <div>
             <h1>
                <Link to='/'>BACK TO HAPPY GIRAFFE</Link>
