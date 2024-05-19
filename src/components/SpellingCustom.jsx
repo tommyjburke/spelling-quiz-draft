@@ -4,7 +4,7 @@ import PackingList from './PackingList'
 import Footer from './Footer'
 import { useState } from 'react'
 
-export default function SpellingHome() {
+export default function SpellingCustom() {
    const [items, setItems] = useState([])
    const [speechSpeed, setSpeechSpeed] = useState(1)
 
@@ -19,12 +19,10 @@ export default function SpellingHome() {
    }
 
    const reScrambleWord = (item) => {
-      // Convert the word to an array of characters
       console.log('ITEM: ', item)
       let word = item.description
       const charArray = word.split('')
 
-      // Shuffle the array using the Fisher-Yates shuffle algorithm
       for (let i = charArray.length - 1; i > 0; i--) {
          const j = Math.floor(Math.random() * (i + 1))
          ;[charArray[i], charArray[j]] = [

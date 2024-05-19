@@ -1,18 +1,4 @@
 {
-   "spellingLists": [
-      {
-         "theme": "Short Vowels",
-         "words": ["cat", "dog", "pen", "bug", "box"]
-      },
-      {
-         "theme": "Long Vowels",
-         "words": ["cake", "bike", "rope", "cube", "bone"]
-      },
-      {
-         "theme": "Digraphs",
-         "words": ["ship", "shop", "fish", "chip", "whale"]
-      }
-   ],
    "Y1P2": [
       {
          "theme": "Year 1 (P2) Basic",

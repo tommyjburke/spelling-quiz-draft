@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { ConfigProvider } from 'antd'
-import SpellingHome from './SpellingHome'
+import SpellingCustom from './SpellingCustom'
 import {
    createBrowserRouter,
    RouterProvider,
@@ -10,28 +10,44 @@ import Error404 from './Error404'
 import KSTemplate from './KSTemplate'
 import KSTemplate2 from './KSTemplate2'
 import SpellingPractice from './SpellingPractice'
+import SpellingConsole from './SpellingConsole'
+import Home from './Home'
 
 const router = createBrowserRouter([
    {
       path: '/',
-      element: <SpellingHome />,
+      element: <Home />,
       errorElement: <Error404 />,
-   },
-   {
-      path: '/maths',
-      element: <Maths />,
-   },
-   {
-      path: '/ks/:ksId',
-      element: <KSTemplate />,
-   },
-   {
-      path: '/ks/:ksId/:level/:number',
-      element: <KSTemplate2 />,
-   },
-   {
-      path: '/spelling-list',
-      element: <SpellingPractice />,
+      children: [
+         {
+            path: '/spelling-custom',
+            element: <SpellingCustom />,
+         },
+         {
+            path: '/maths',
+            element: <Maths />,
+         },
+         {
+            path: '/ks/:ksId',
+            element: <KSTemplate />,
+         },
+         {
+            path: '/ks/:ksId/:level/:number',
+            element: <KSTemplate2 />,
+         },
+         {
+            path: '/spelling-list',
+            element: <SpellingPractice />,
+         },
+         {
+            path: '/spelling-console',
+            element: <SpellingConsole />,
+         },
+         {
+            path: '/spelling-custom',
+            element: <SpellingCustom />,
+         },
+      ],
    },
 ])
 
