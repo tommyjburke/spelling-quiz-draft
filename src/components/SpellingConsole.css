@@ -1,0 +1,8 @@
+.wordTarget {
+   padding: 1px;
+}
+.wordTarget:hover {
+   cursor: crosshair;
+   border: dashed 1px yellow;
+   color: rgb(255, 91, 91);
+}
