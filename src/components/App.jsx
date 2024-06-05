@@ -1,41 +1,58 @@
 import { useState } from 'react'
-import { ConfigProvider } from 'antd'
-import SpellingCustom from './SpellingCustom'
 import {
    createBrowserRouter,
    RouterProvider,
 } from 'react-router-dom'
+import { ConfigProvider } from 'antd'
+
+import DiySpellingConsole from '../diy-spelling/DiySpellingConsole'
 import Maths from './Maths'
 import Error404 from './Error404'
-import KSTemplate from './KSTemplate'
-import KSTemplate2 from './KSTemplate2'
+import KSTemplate from '../ks-spelling/KSTemplate'
+import KSTemplate2 from '../ks-spelling/KSTemplate2'
 import SpellingPractice from './SpellingPractice'
-import SpellingConsole from './SpellingConsole'
+import KsSpellingConsole from '../ks-spelling/KsSpellingConsole'
 import Home from './Home'
-import KsTest from './KsTest'
+import KsTest from '../ks-spelling/KsTest'
+import DiyPlayRoute from '../diy-spelling/DiyPlayRoute'
+import Welcome from './Welcome'
+import KsPlayRoute from '../ks-spelling/KsPlayRoute'
+import { CreateArray } from './CreateArray'
 
 const router = createBrowserRouter([
    {
       path: '/',
+
       element: <Home />,
+
       errorElement: <Error404 />,
       children: [
          {
-            path: '/spelling-custom',
-            element: <SpellingCustom />,
+            path: '/',
+            element: <DiySpellingConsole />,
+            // element: <Welcome />,
          },
          {
-            path: '/maths',
-            element: <Maths />,
+            path: '/spelling-diy',
+            element: <DiySpellingConsole />,
          },
          {
-            path: '/ks/:ksId',
-            element: <KSTemplate />,
+            path: '/spelling-diy/:data',
+            element: <DiyPlayRoute />,
+         },
+
+         {
+            path: '/ks',
+            element: <KsSpellingConsole />,
          },
          {
-            path: '/ks-test/:data',
-            element: <KsTest />,
+            path: '/ks/:data',
+            element: <KsPlayRoute />,
          },
+         // {
+         //    path: '/ks-test/:data',
+         //    element: <KsTest />,
+         // },
          {
             path: '/ks/:ksId/:level/:number',
             element: <KSTemplate2 />,
@@ -44,13 +61,18 @@ const router = createBrowserRouter([
             path: '/spelling-list',
             element: <SpellingPractice />,
          },
+
+         // {
+         //    path: '/spelling-custom',
+         //    element: <SpellingCustom />,
+         // },
          {
-            path: '/spelling-console',
-            element: <SpellingConsole />,
+            path: '/maths',
+            element: <Maths />,
          },
          {
-            path: '/spelling-custom',
-            element: <SpellingCustom />,
+            path: 'create-array',
+            element: <CreateArray />,
          },
       ],
    },
@@ -67,11 +89,24 @@ export default function App() {
             token: {
                // fontFamily: 'Delicious Handrawn',
                // colorPrimary: '#654321',
-               backgroundAttachment: 'fixed',
-               backgroundColor: 'var(--myBrown)',
+               // backgroundAttachment: 'fixed',
+               // backgroundColor: 'var(--myBrown)',
+               fontFamily: 'Roboto',
             },
             components: {
-               Slider: {
+               Switch: {
+                  colorPrimary: '#654321',
+                  colorPrimaryBorder: 'var(--myOrange)',
+                  colorPrimaryActive: 'var(--myOrange)',
+                  colorPrimaryHover: 'var(--myOrange)',
+               },
+               Button: {
+                  // colorBgContainer: 'var(--myBrown)',
+                  colorPrimary: '#654321',
+                  // colorPrimaryActive: 'red',
+                  colorPrimaryHover: 'var(--myOrange)',
+               },
+               PopConfirm: {
                   handleStyle: {
                      color: 'brown',
                      backgroundColor: 'brown',
@@ -80,6 +115,23 @@ export default function App() {
                   railStyle: {
                      backgroundColor: 'orange',
                   },
+               },
+               Slider: {
+                  handleColor: 'var(--myOrange)',
+                  dotActiveBorderColor: 'brown',
+                  handleActiveColor: 'brown',
+                  railBg: 'darkgray',
+                  trackBg: 'var(--myBrown)',
+                  trackHoverBg: 'brown',
+
+                  // handleStyle: {
+                  //    color: 'brown',
+                  //    backgroundColor: 'brown',
+                  // },
+                  // colorPrimary: '#654321',
+                  // railStyle: {
+                  //    backgroundColor: 'orange',
+                  // },
                },
             },
          }}

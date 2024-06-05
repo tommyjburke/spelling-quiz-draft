@@ -107,9 +107,10 @@ input[type='range']:focus::-ms-fill-upper {
 }
 
 .slider-label {
-   width: 60px;
-   font-family: 'Courier New';
-   font-size: 1.5rem;
+   /* width: 20px; */
+   font-family: 'Roboto';
+   font-size: 1rem;
+   padding-left: 0px;
 }
 
 .rate-control {
@@ -120,7 +121,7 @@ input[type='range']:focus::-ms-fill-upper {
    padding-right: 10px;
    gap: 0rem;
    margin: 0 auto;
-   background-color: #5a3e2b;
+   background-color: transparent;
 }
 
 /* #e5771f; ORANGE */

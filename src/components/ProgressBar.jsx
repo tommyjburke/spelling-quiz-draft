@@ -2,17 +2,21 @@ import { Flex, Progress } from 'antd'
 
 function ProgressBar({ percentage }) {
    return (
-      <div>
+      <div style={{ margin: '0', padding: '0' }}>
          <Progress
             showInfo={false}
             percent={percentage}
             type='line'
             trailColor={'#6f6f6f'}
-            strokeWidth={28}
-            size='small'
+            // size={68}
+            size={['90%', 28]}
             strokeColor={{
                '0%': 'red',
-               '50%': 'orange',
+               // '25%': 'purple',
+               // '30%': 'blue',
+               '50%': 'yellow',
+               // '70%': 'yellow',
+
                '100%': 'green',
             }}
          />

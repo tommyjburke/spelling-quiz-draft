@@ -1,45 +1,68 @@
-import { NavLink, Outlet } from 'react-router-dom'
-import Footer from './Footer'
+import { NavLink, Link, Outlet } from 'react-router-dom'
+import Footer from '../components/Footer'
+import './NavBar.css'
+import { LoadingProvider } from './LoadingContext'
+import Loading from './Loading'
+import background5 from '../media/background5.png'
 
 const navigation = [
-   { name: 'Spelling Console', href: '/spelling-console' },
-   { name: 'Spelling Custom', href: '/spelling-custom' },
-   { name: 'Spelling Practice', href: '/spelling-list' },
-]
+   { name: 'KeyStage Words', href: '/ks' },
+   {
+      name: 'Background 5',
+      href: '/ks',
+      background: background5,
+   },
 
-const header = {
-   // padding: '30px',
-   // margin: '30px',
-}
+   { name: 'DIY Spelling', href: '/spelling-diy' },
+
+   // { name: 'Maths', href: '/spelling-list' },
+]
 
 export default function NavBar() {
    return (
       <div className='navBarContainer'>
          <div className='navBar'>
             {navigation.map((item) => (
-               <NavLink
-                  key={item.name}
-                  to={item.href}
-                  // className='header'
-                  className={({ isActive }) => {
-                     return isActive
-                        ? 'text-primary'
-                        : 'text-gray'
-                  }}
-               >
-                  {item.name}
-               </NavLink>
+               <div key={item.name} className='navLink'>
+                  <NavLink
+                     to={item.href}
+                     className={({ isActive }) => {
+                        return isActive
+                           ? 'activeLink'
+                           : 'inactiveLink'
+                     }}
+                  >
+                     {item.background ? (
+                        <img
+                           className='navLinkImg'
+                           height={'30px'}
+                           src={item.background}
+                           alt={item.name}
+                        />
+                     ) : (
+                        item.name
+                     )}
+                  </NavLink>
+               </div>
             ))}
          </div>
          <>
-            {' '}
-            <Outlet />
-         </>{' '}
+            <LoadingProvider>
+               <Loading />
+               <Outlet />
+            </LoadingProvider>
+         </>
          {/* <Footer
                // items={items}
                /> */}
          <div className='footer'>
-            © T.J. Burke {new Date().getFullYear()}
+            <div className='content'>
+               {' '}
+               <Link to='/create-array'>
+                  {' '}
+                  © T.J. Burke {new Date().getFullYear()}
+               </Link>
+            </div>
          </div>
       </div>
    )

@@ -4,6 +4,9 @@ const TypewriterEffect = ({
    text,
    delay = 100,
    isLooping = false,
+   myColour,
+   myFontSize,
+   children,
 }) => {
    const [displayText, setDisplayText] = useState('')
    const [currentIndex, setCurrentIndex] = useState(0)
@@ -30,9 +33,9 @@ const TypewriterEffect = ({
    }, [currentIndex, delay, text, isLooping])
 
    return (
-      <div>
-         <span style={{ color: 'green' }}>♳</span> {displayText}
-      </div>
+      <span style={{ color: myColour, fontSize: myFontSize }}>
+         {displayText}
+      </span>
    )
 }
 

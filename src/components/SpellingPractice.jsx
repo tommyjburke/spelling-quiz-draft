@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import spellingData from '../data//spellingLists.json'
-import WordFilterLength from './WordFilterLength'
+// import WordFilterLength from '../ks-spelling/WordFilterLength'
 
 const SpellingPractice = () => {
    const [selectedTheme, setSelectedTheme] = useState(null)
@@ -80,11 +80,11 @@ const SpellingPractice = () => {
             {allWords.length >= 1 && (
                <div>
                   <h1>WORD FILTER LENGTH</h1>
-                  <WordFilterLength
+                  {/* <WordFilterLength
                      key={selectedTheme.theme}
                      allWords={allWords}
                      // words={selectedTheme.words}
-                  />
+                  /> */}
                </div>
             )}
          </div>
